@@ -26,6 +26,12 @@ add_executable(
     src/main.cpp
 )
 
+target_sources(n64decomp
+    PRIVATE
+        src/io/binary_reader.cpp
+        src/n64/rom.cpp
+)
+
 target_link_libraries(
     n64decomp
     PRIVATE
@@ -54,6 +60,37 @@ if(N64DECOMP_BUILD_TESTS)
     add_test(
         NAME n64decomp_smoke_test
         COMMAND n64decomp_smoke_test
+    )
+
+    add_executable(n64decomp_binary_reader_test
+    tests/binary_reader_test.cpp
+)
+
+target_link_libraries(
+    n64decomp_binary_reader_test
+    PRIVATE
+        n64decomp
+)
+
+add_test(
+    NAME n64decomp_binary_reader_test
+    COMMAND n64decomp_binary_reader_test
+)
+
+
+add_executable(n64decomp_rom_test
+    tests/rom_test.cpp
+)
+
+target_link_libraries(
+    n64decomp_rom_test
+    PRIVATE
+        n64decomp
+)
+
+    add_test(
+        NAME n64decomp_rom_test
+        COMMAND n64decomp_rom_test
     )
 
     add_executable(n64decomp_diagnostics_test
