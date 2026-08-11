@@ -55,4 +55,35 @@ if(N64DECOMP_BUILD_TESTS)
         NAME n64decomp_smoke_test
         COMMAND n64decomp_smoke_test
     )
+
+add_executable(n64decomp_diagnostics_test
+    tests/diagnostics_test.cpp
+    src/diagnostics.cpp
+)
+
+target_include_directories(n64decomp_diagnostics_test
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+add_test(
+    NAME n64decomp_diagnostics_test
+    COMMAND n64decomp_diagnostics_test
+)
+
+add_executable(n64decomp_result_test
+    tests/result_test.cpp
+    src/diagnostics.cpp
+)
+
+target_include_directories(n64decomp_result_test
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+add_test(
+    NAME n64decomp_result_test
+    COMMAND n64decomp_result_test
+)
+
 endif()
