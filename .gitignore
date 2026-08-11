@@ -1,0 +1,49 @@
+# Build directories
+build/
+build-*/
+cmake-build-*/
+
+# IDEs
+.vscode/
+.idea/
+.vs/
+
+# Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Compiled objects and binaries
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+
+# Debugging
+*.dSYM/
+
+# Generated files
+compile_commands.json
+
+# Local ROMs
+roms/
+*.z64
+*.v64
+*.n64
+
+# Generated analysis output
+output/
+generated/
+
+# Python cache, should helper scripts be added later
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
