@@ -32,6 +32,11 @@ target_link_libraries(
         n64decomp_core
 )
 
+target_sources(n64decomp
+    PRIVATE
+        src/diagnostics.cpp
+)
+
 if(N64DECOMP_BUILD_TESTS)
     enable_testing()
 
