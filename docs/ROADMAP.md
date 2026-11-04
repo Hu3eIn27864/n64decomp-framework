@@ -1,164 +1,38 @@
 # Roadmap
 
-## Phase 1 — Foundation
+The project aims to recover progressively higher-level semantics from Nintendo 64 MIPS code through explicit intermediate representations. It is a research-scale static-analysis project, not a simple assembly-to-C++ translator.
 
-Commits 001–030
+Estimates assume one experienced developer at 10–15 focused hours per week. They are planning ranges, not delivery promises.
 
-- Project structure
-- CMake
-- testing
-- diagnostics
-- configuration
-- common utilities
-- documentation infrastructure
+| Phase | Scope | Estimate | Exit gate |
+|---|---|---:|---|
+| M001 | Foundation, diagnostics, configuration, tests | 2–4 weeks | Clean build and test baseline |
+| M002 | ROM loading, endian normalization, headers and address spaces | 3–5 weeks | Synthetic ROM fixtures parse correctly |
+| M003 | MIPS III / R4300 instruction model and semantics | 6–10 weeks | Instruction tests cover documented supported set |
+| M004 | Function discovery and control-flow targets | 6–10 weeks | Repeatable function candidates with confidence |
+| M005 | Basic blocks, CFG and semantic IR | 8–12 weeks | CFG invariants and IR tests pass |
+| M006 | Data flow, liveness, reaching definitions and SSA | 3–6 months | Data-flow results validated on hand-checked functions |
+| M007 | Types, pointers, stack/global memory analysis | 3–6 months | Conservative type and memory facts with uncertainty |
+| M008 | Structure and array recovery | 2–4 months | Recoveries carry evidence and confidence |
+| M009 | Expression recovery and simplification | 2–4 months | Stable expression trees and regression tests |
+| M010 | Control-flow structuring | 2–4 months | Structured output preserves CFG semantics on test corpus |
+| M011 | Semantic naming and API recognition | 2–4 months | Names are evidence-backed and confidence-scored |
+| M012 | C++ generation and verification | 3–6 months | Generated code compiles for selected supported cases |
+| M013 | Regression corpus and differential validation | Ongoing | Reproducible reports for each supported target |
 
-## Phase 2 — ROM subsystem
+## Recommended implementation order
 
-Commits 031–060
+1. Finish M001 before introducing ROM-specific abstractions.
+2. Complete M002 and M003 independently; keep instruction semantics table-driven.
+3. Build function discovery and CFG before any source generation.
+4. Introduce IR validation and golden tests before data-flow work.
+5. Treat SSA, pointer analysis and structure recovery as research-heavy phases.
+6. Generate C++ only after the analysis pipeline has enough semantic evidence.
 
-- ROM loading
-- endian detection
-- Z64/V64/N64 normalization
-- ROM header
-- CRC metadata
-- address spaces
-- ROM/RAM mappings
-- segment representation
+## Scope controls
 
-## Phase 3 — MIPS decoding
-
-Commits 061–100
-
-- MIPS III instruction model
-- R4300-oriented instruction semantics
-- integer instructions
-- branches
-- jumps
-- loads/stores
-- HI/LO
-- COP0
-- COP1
-- FPU
-- special instructions
-
-## Phase 4 — Function discovery
-
-Commits 101–150
-
-- entry-point analysis
-- call discovery
-- branch targets
-- function boundaries
-- jump tables
-- indirect calls
-- function metadata
-
-## Phase 5 — CFG and IR
-
-Commits 151–250
-
-- basic blocks
-- control-flow graph
-- instruction IR
-- semantic operations
-- delay-slot modeling
-- call graph
-
-## Phase 6 — Data-flow and SSA
-
-Commits 251–350
-
-- use/def analysis
-- register liveness
-- reaching definitions
-- SSA
-- value propagation
-- constant propagation
-- copy propagation
-
-## Phase 7 — Types and memory
-
-Commits 351–500
-
-- integer types
-- pointer types
-- floating-point types
-- arrays
-- memory regions
-- aliases
-- pointer arithmetic
-- stack variables
-- global variables
-
-## Phase 8 — Structure recovery
-
-Commits 501–650
-
-- struct candidates
-- field inference
-- array recovery
-- nested structures
-- object-like patterns
-- memory access grouping
-
-## Phase 9 — Expression recovery
-
-Commits 651–750
-
-- expression trees
-- arithmetic simplification
-- casts
-- comparisons
-- pointer expressions
-- function arguments
-- return values
-
-## Phase 10 — Control-flow structuring
-
-Commits 751–900
-
-- if/else
-- loops
-- switch
-- break
-- continue
-- early returns
-- irreducible-flow handling
-
-## Phase 11 — Semantic naming
-
-Commits 901–1000
-
-- function names
-- variable names
-- field names
-- type names
-- constants
-- API recognition
-- confidence scoring
-
-## Phase 12 — C++ backend
-
-Commits 1001–1100
-
-- C++ AST
-- declarations
-- structs/classes
-- functions
-- expressions
-- control flow
-- source formatting
-
-## Phase 13 — Verification
-
-Commits 1101+
-
-- generated-source validation
-- semantic equivalence checks
-- regression corpus
-- instruction coverage
-- differential testing
-- large-scale ROM analysis
-
-The exact commit ranges are provisional and may change as the implementation
-reveals the actual complexity of each subsystem.
+- Start with one documented N64 binary format and a limited R4300 instruction subset.
+- Unknown instructions and uncertain code/data boundaries must remain explicit.
+- Do not claim general C++ decompilation from successful disassembly or function discovery.
+- Keep ROM images out of the repository; use synthetic fixtures and legally distributable homebrew tests.
+- Re-estimate each phase after its first working vertical slice.
